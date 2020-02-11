@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,6 +39,8 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player_name = str(input("Please pick a name for the player: "))
+player = Player(player_name, "outside")
 
 # Write a loop that:
 #
@@ -49,3 +52,38 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+while True:
+    print(f"Name: {player.name}\nCurrent Room: {player.current_room}")
+    direction = input("Please provide a cardinal direction: ")
+    if direction == 'q':
+        break
+
+
+def adventure_game():
+    print("")
+# def guessing_game():
+#   print("Guess the number!")
+
+#   secret_number = random.randrange(101)
+
+#   while True:
+#     guess = input("Input your guess: ")
+
+#     try:
+#       guess = int(guess)
+#     except ValueError:
+#       print("Please enter an integer.")
+#       continue
+
+#     print(f"You guessed: {guess}")
+
+#     if guess == secret_number:
+#       print("You win!")
+#       break
+#     elif guess < secret_number:
+#       print("Too small!")
+#     else:
+#       print("Too big!")
+
+# if __name__ == '__main__':
+#   guessing_game()
