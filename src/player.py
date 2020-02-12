@@ -1,3 +1,4 @@
+from room import Room
 # Write a class to hold player information, e.g. what room they are in
 # currently.
 """
@@ -10,6 +11,9 @@ Attributes:
 
 
 class Player:
-    def __init__(self, name, current_room):
+    def __init__(self, name, starting_room):
         self.name = name
-        self.current_room = current_room
+        self.current_room = starting_room
+
+    def travel(self, direction):
+        self.current_room = self.current_room.assign_room(direction)

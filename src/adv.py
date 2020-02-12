@@ -39,8 +39,9 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+print("Welcome to the adventure game")
 player_name = str(input("Please pick a name for the player: "))
-player = Player(player_name, "outside")
+player = Player(player_name, room["outside"])
 
 # Write a loop that:
 #
@@ -53,14 +54,21 @@ player = Player(player_name, "outside")
 #
 # If the user enters "q", quit the game.
 while True:
+
     print(f"Name: {player.name}\nCurrent Room: {player.current_room}")
-    direction = input("Please provide a cardinal direction: ")
-    if direction == 'q':
+    print("press q to exit the game")
+    direction = input("Where would like to go (n,s,w,e): ")
+    print("~~~~~~~~~~~~~~~~~~~~~~~")
+
+    if direction in ["n", "s", "w", "e"]:
+        player.travel(direction)
+    elif direction == 'q':
+        print("Good Bye @_@")
         break
+    else:
+        print("invalid direction")
 
 
-def adventure_game():
-    print("")
 # def guessing_game():
 #   print("Guess the number!")
 
