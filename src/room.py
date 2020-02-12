@@ -12,7 +12,7 @@ class Room():
         self.e_to = e_to
 
     def __repr__(self):
-        return f'{self.name}\n{self.description}'
+        return f'{self.name} \n{self.description}'
 
     def assign_room(self, direction):
         if direction == 'n':
@@ -23,3 +23,15 @@ class Room():
             return self.w_to
         elif direction == 'e':
             return self.e_to
+
+    def available_exit(self):
+        exits = []
+        if self.n_to:
+            exits.append("n")
+        if self.s_to:
+            exits.append("s")
+        if self.w_to:
+            exits.append("w")
+        if self.e_to:
+            exits.append("e")
+        return exits

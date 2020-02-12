@@ -1,4 +1,3 @@
-from room import Room
 # Write a class to hold player information, e.g. what room they are in
 # currently.
 """
@@ -16,4 +15,9 @@ class Player:
         self.current_room = starting_room
 
     def travel(self, direction):
-        self.current_room = self.current_room.assign_room(direction)
+        next_room = self.current_room.assign_room(direction)
+        if next_room:
+            self.current_room = next_room
+            print(self.current_room)
+        else:
+            print("\nThat is not a valid direction input")

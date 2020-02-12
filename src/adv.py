@@ -56,8 +56,11 @@ player = Player(player_name, room["outside"])
 while True:
 
     print(f"Name: {player.name}\nCurrent Room: {player.current_room}")
-    print("press q to exit the game")
-    direction = input("Where would like to go (n,s,w,e): ")
+    print("\npress q to exit the game")
+    exits = player.current_room.available_exit()
+    print(f"\nplease select from {exits}")
+    direction = input("Where would like to go : ").lower()
+
     print("~~~~~~~~~~~~~~~~~~~~~~~")
 
     if direction in ["n", "s", "w", "e"]:
@@ -67,31 +70,3 @@ while True:
         break
     else:
         print("invalid direction")
-
-
-# def guessing_game():
-#   print("Guess the number!")
-
-#   secret_number = random.randrange(101)
-
-#   while True:
-#     guess = input("Input your guess: ")
-
-#     try:
-#       guess = int(guess)
-#     except ValueError:
-#       print("Please enter an integer.")
-#       continue
-
-#     print(f"You guessed: {guess}")
-
-#     if guess == secret_number:
-#       print("You win!")
-#       break
-#     elif guess < secret_number:
-#       print("Too small!")
-#     else:
-#       print("Too big!")
-
-# if __name__ == '__main__':
-#   guessing_game()
