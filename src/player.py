@@ -13,6 +13,7 @@ class Player:
     def __init__(self, name, starting_room):
         self.name = name
         self.current_room = starting_room
+        self.inventory = None
 
     def travel(self, direction):
         next_room = self.current_room.assign_room(direction)

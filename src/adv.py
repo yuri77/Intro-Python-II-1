@@ -1,5 +1,7 @@
 from room import Room
 from player import Player
+from item import Item
+from sys import
 
 
 # Declare all the rooms
@@ -23,6 +25,15 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+item = {
+    'potion': Item("potion", "Restore HP by 100"),
+    'ether': Item("Ether", "Restore Magic Power by 100"),
+    'antidote': Item("AntiDote", "Removes Poison from one target"),
+    'apocalypse': Item("Apocalypse", "Sword with triple darkness damage"),
+    'fairytail': Item('fairy tail', 'weapon for the wizard')
+
+}
+
 
 # Link rooms together
 
@@ -35,6 +46,10 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# association - room's inventory items
+room['outside'].items = [item['potion'], item['ether']]
+room['foyer'].items = [item['antidote'], item['potion']]
+room['treasure'].items = [item['apocalypse'], item['fairytail']]
 #
 # Main
 #
@@ -63,11 +78,13 @@ print("\npress q to exit the game")
 while True:
 
     direction = input("\nWhere would like to go : ").lower()
+    print(f"moved {direction}")
 
     print("~~~~~~~~~~~~~~~~~~~~~~~")
 
     if direction in ["n", "s", "w", "e"]:
         player.travel(direction)
+
     elif direction == 'q':
         print("Good Bye @_@")
         break
