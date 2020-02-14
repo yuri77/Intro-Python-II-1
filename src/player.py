@@ -23,6 +23,6 @@ class Player:
         else:
             print("\nThat is not a valid direction input")
 
-    def get_item(self, item):
+    def take_item(self, item):
         self.inventory.append(item)
-        self.inventory.remove(item)
+        self.current_room.items.remove(item)

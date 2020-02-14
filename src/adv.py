@@ -72,16 +72,17 @@ print("Welcome to the adventure game")
 player = Player("yurika", room["outside"])
 
 directions = ['n', 's', 'e', 'w']
-options = ['move', 'inventory(i)', 'take', 'drop', 'quit(q)']
+options = ['move [n,s,e,w]', 'inventory(i)', 'take', 'drop', 'quit(q)']
 
 print(f"\nPlayer_Name: {player.name}\nCurrent Room: {player.current_room}")
 
 playing = True
 
 while playing:
-    print(f"\nAs you look around you see:")
-    for i in player.current_room.items:
-        print(i)
+    if len(player.current_room.items) > 0:
+        print(f"\nAs you look around you see:")
+        for i in player.current_room.items:
+            print(i)
 
     print("~~~~~~~~~~~~~~~~~~~~~~~\n")
     print(f"Options: {','.join(options)}\n")
@@ -90,29 +91,28 @@ while playing:
     print("~~~~~~~~~~~~~~~~~~~~~~~\n")
 
 # check the the cmd action from user
+    if len(cmd.split()) > 1:
+        cmd = cmd.split()
+        print(f"cmd: {cmd}")
+        if cmd[0] == 'take':
+            item_in_room = False
 
-    print(f"cmd: {cmd}")
-    if cmd == 'i' or cmd == 'inventory':
+            for item in player.current_room.items:
+                if item.name == cmd[1]:
+                    player.take_item(item)
+                    item_in_room = True
+            if not item_in_room:
+                print("item selected is not in the current room")
+
+        else:
+            print("please provide a proper command")
+
+    elif cmd == 'i' or cmd == 'inventory':
         print(f"You currently have: {player.inventory}")
 
     elif cmd == 'q' or cmd == 'quit':
         print("Good Bye @_@")
         playing = False
 
-    elif len(cmd) > 1:
-        cmd = cmd.split()
-        print(f"splited cmd {cmd}")
-        if cmd[0] == 'move':
-            if cmd[1] in directions:
-                print(f"traveled: {cmd[0]}")
-                player.travel(cmd[1])
-        if cmd[0] == 'take':
-            for item in player.current_room.items:
-                # print(f"item_name:{item.name}")
-                if item.name == cmd[1]:
-                    player.get_item(item)
-                    print(f"{item.name} sotred in inventory")
-                    player.current_room.remove_item(item)
-                    break
-                else:
-                    print("item is not available")
+    else:
+        print("Please provide an appropriate input")

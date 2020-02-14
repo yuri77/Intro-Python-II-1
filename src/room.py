@@ -38,3 +38,6 @@ class Room():
         if self.e_to:
             exits.append("e")
         return exits
+
+    # def remove_item(self, item):
+    #     self.items.remove(item)
