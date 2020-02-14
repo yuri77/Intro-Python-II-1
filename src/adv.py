@@ -1,4 +1,7 @@
 from room import Room
+from player import Player
+from item import Item
+
 
 # Declare all the rooms
 
@@ -21,6 +24,15 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+item = {
+    'potion': Item("potion", "Restore HP by 100"),
+    'ether': Item("ether", "Restore Magic Power by 100"),
+    'antidote': Item("antiDote", "Removes Poison from one target"),
+    'apocalypse': Item("apocalypse", "Sword with triple darkness damage"),
+    'fairytail': Item('fairy tail', 'weapon for the wizard')
+
+}
+
 
 # Link rooms together
 
@@ -33,11 +45,16 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# association - room's inventory items
+room['outside'].items = [item['potion'], item['ether']]
+room['foyer'].items = [item['antidote'], item['potion']]
+room['treasure'].items = [item['apocalypse'], item['fairytail']]
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+
 
 # Write a loop that:
 #
@@ -49,3 +66,69 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+print("Welcome to the adventure game")
+# player_name = str(input("Please pick a name for the player: "))
+player = Player("yurika", room["outside"])
+
+directions = ['n', 's', 'e', 'w']
+options = ['move [n,s,e,w]', 'inventory(i)', 'take', 'drop', 'quit(q)']
+
+print(f"\nPlayer_Name: {player.name}\nCurrent Room: {player.current_room}")
+
+playing = True
+
+while playing:
+    if player.current_room.items:
+        print(f"\nAs you look around you see:")
+        for i in player.current_room.items:
+            print(i)
+
+    print("~~~~~~~~~~~~~~~~~~~~~~~\n")
+    print(f"Options: {','.join(options)}\n")
+# obtain user input for next move
+    cmd = input("---> ").lower()
+    print("~~~~~~~~~~~~~~~~~~~~~~~\n")
+
+# check the the cmd action from user
+    if len(cmd.split()) > 1:
+        cmd = cmd.split()
+
+        if cmd[0] == 'move':
+            if cmd[1] in directions:
+                player.travel(cmd[1])
+
+        elif cmd[0] == 'take':
+            item_in_room = False
+
+            for item in player.current_room.items:
+                if item.name == cmd[1]:
+                    player.take_item(item)
+                    item.on_take()
+                    item_in_room = True
+            if not item_in_room:
+                print("item selected is not in the current room")
+
+        elif cmd[0] == 'drop':
+            user_inventory = False
+
+            for item in player.inventory:
+                if item.name == cmd[1]:
+                    player.drop_item(item)
+                    item.on_drop()
+                    user_inventory = True
+            if not user_inventory:
+                print("you don't have the item to drop")
+
+        else:
+            print("please provide a proper command")
+
+    elif cmd == 'i' or cmd == 'inventory':
+        print(f"You currently have: {player.inventory}")
+
+    elif cmd == 'q' or cmd == 'quit':
+        print("Good Bye @_@")
+        playing = False
+
+    else:
+        print("Please provide an appropriate input")
