@@ -13,7 +13,7 @@ class Room():
         self.items = None
 
     def __repr__(self):
-        return f'{self.name} \n\n{self.description}\nItems in the Room: {self.items}\nAvailable Exists Ahead: {self.available_exit()}'
+        return f'{self.name} \n\n{self.description}\nAvailable Exists Ahead: {self.available_exit()}'
 
     def assign_room(self, direction):
         if direction == 'n':
@@ -38,6 +38,3 @@ class Room():
         if self.e_to:
             exits.append("e")
         return exits
-
-    # def available_exit_string(self):
-    #     return f"Exits: {self.available_exit()}"

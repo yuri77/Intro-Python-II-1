@@ -1,7 +1,6 @@
 from room import Room
 from player import Player
 from item import Item
-from sys import
 
 
 # Declare all the rooms
@@ -27,9 +26,9 @@ earlier adventurers. The only exit is to the south."""),
 
 item = {
     'potion': Item("potion", "Restore HP by 100"),
-    'ether': Item("Ether", "Restore Magic Power by 100"),
-    'antidote': Item("AntiDote", "Removes Poison from one target"),
-    'apocalypse': Item("Apocalypse", "Sword with triple darkness damage"),
+    'ether': Item("ether", "Restore Magic Power by 100"),
+    'antidote': Item("antiDote", "Removes Poison from one target"),
+    'apocalypse': Item("apocalypse", "Sword with triple darkness damage"),
     'fairytail': Item('fairy tail', 'weapon for the wizard')
 
 }
@@ -69,24 +68,51 @@ room['treasure'].items = [item['apocalypse'], item['fairytail']]
 # If the user enters "q", quit the game.
 
 print("Welcome to the adventure game")
-player_name = str(input("Please pick a name for the player: "))
-player = Player(player_name, room["outside"])
+# player_name = str(input("Please pick a name for the player: "))
+player = Player("yurika", room["outside"])
+
+directions = ['n', 's', 'e', 'w']
+options = ['move', 'inventory(i)', 'take', 'drop', 'quit(q)']
 
 print(f"\nPlayer_Name: {player.name}\nCurrent Room: {player.current_room}")
-print("\npress q to exit the game")
 
-while True:
+playing = True
 
-    direction = input("\nWhere would like to go : ").lower()
-    print(f"moved {direction}")
+while playing:
+    print(f"\nAs you look around you see:")
+    for i in player.current_room.items:
+        print(i)
 
-    print("~~~~~~~~~~~~~~~~~~~~~~~")
+    print("~~~~~~~~~~~~~~~~~~~~~~~\n")
+    print(f"Options: {','.join(options)}\n")
+# obtain user input for next move
+    cmd = input("---> ").lower()
+    print("~~~~~~~~~~~~~~~~~~~~~~~\n")
 
-    if direction in ["n", "s", "w", "e"]:
-        player.travel(direction)
+# check the the cmd action from user
 
-    elif direction == 'q':
+    print(f"cmd: {cmd}")
+    if cmd == 'i' or cmd == 'inventory':
+        print(f"You currently have: {player.inventory}")
+
+    elif cmd == 'q' or cmd == 'quit':
         print("Good Bye @_@")
-        break
-    else:
-        print("invalid direction")
+        playing = False
+
+    elif len(cmd) > 1:
+        cmd = cmd.split()
+        print(f"splited cmd {cmd}")
+        if cmd[0] == 'move':
+            if cmd[1] in directions:
+                print(f"traveled: {cmd[0]}")
+                player.travel(cmd[1])
+        if cmd[0] == 'take':
+            for item in player.current_room.items:
+                # print(f"item_name:{item.name}")
+                if item.name == cmd[1]:
+                    player.get_item(item)
+                    print(f"{item.name} sotred in inventory")
+                    player.current_room.remove_item(item)
+                    break
+                else:
+                    print("item is not available")

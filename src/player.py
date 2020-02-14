@@ -13,7 +13,7 @@ class Player:
     def __init__(self, name, starting_room):
         self.name = name
         self.current_room = starting_room
-        self.inventory = None
+        self.inventory = []
 
     def travel(self, direction):
         next_room = self.current_room.assign_room(direction)
@@ -22,3 +22,7 @@ class Player:
             print(self.current_room)
         else:
             print("\nThat is not a valid direction input")
+
+    def get_item(self, item):
+        self.inventory.append(item)
+        self.inventory.remove(item)
