@@ -26,3 +26,7 @@ class Player:
     def take_item(self, item):
         self.inventory.append(item)
         self.current_room.items.remove(item)
+
+    def drop_item(self, item):
+        self.current_room.items.append(item)
+        self.inventory.remove(item)

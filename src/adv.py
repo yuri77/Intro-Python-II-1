@@ -93,7 +93,6 @@ while playing:
 # check the the cmd action from user
     if len(cmd.split()) > 1:
         cmd = cmd.split()
-        print(f"cmd: {cmd}")
 
         if cmd[0] == 'move':
             if cmd[1] in directions:
@@ -105,9 +104,21 @@ while playing:
             for item in player.current_room.items:
                 if item.name == cmd[1]:
                     player.take_item(item)
+                    item.on_take()
                     item_in_room = True
             if not item_in_room:
                 print("item selected is not in the current room")
+
+        elif cmd[0] == 'drop':
+            user_inventory = False
+
+            for item in player.inventory:
+                if item.name == cmd[1]:
+                    player.drop_item(item)
+                    item.on_drop()
+                    user_inventory = True
+            if not user_inventory:
+                print("you don't have the item to drop")
 
         else:
             print("please provide a proper command")
