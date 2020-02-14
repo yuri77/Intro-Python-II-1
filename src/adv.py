@@ -79,7 +79,7 @@ print(f"\nPlayer_Name: {player.name}\nCurrent Room: {player.current_room}")
 playing = True
 
 while playing:
-    if len(player.current_room.items) > 0:
+    if player.current_room.items:
         print(f"\nAs you look around you see:")
         for i in player.current_room.items:
             print(i)
@@ -94,7 +94,12 @@ while playing:
     if len(cmd.split()) > 1:
         cmd = cmd.split()
         print(f"cmd: {cmd}")
-        if cmd[0] == 'take':
+
+        if cmd[0] == 'move':
+            if cmd[1] in directions:
+                player.travel(cmd[1])
+
+        elif cmd[0] == 'take':
             item_in_room = False
 
             for item in player.current_room.items:
